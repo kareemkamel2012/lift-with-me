@@ -51,6 +51,7 @@ class FollowingRepository {
             });
         });
     }
+
 }
 
 export default new FollowingRepository();
