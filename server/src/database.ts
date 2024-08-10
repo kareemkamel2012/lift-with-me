@@ -28,7 +28,7 @@ class Database {
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 username TEXT NOT NULL UNIQUE,
                 passwordHash TEXT NOT NULL,
-                email TEXT NOT NULL UNIQUE,
+                email TEXT NOT NULL,
                 lastName TEXT NOT NULL,
                 firstName TEXT NOT NULL
             );`);

@@ -17,7 +17,7 @@ router.post('/login', async (req: express.Request, res: express.Response) => {
     }
 })
 
-router.post('/signup', async (req: express.Request, res: express.Response) => {
+router.post('/signup', async (req: express.Request, res: express.Response) => {    
     try {
         const token = await authService.signUp(
             req.body.username,

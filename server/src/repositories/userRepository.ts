@@ -1,5 +1,6 @@
 import { db } from '../database';
 import { User } from '../models/user';
+import { UserEntity } from '../models/userEntity';
 
 class UserRepository {
     async createUser(
@@ -15,9 +16,9 @@ class UserRepository {
         );
     }
 
-    async findById(id: number): Promise<User> {
-        return new Promise<User>((resolve, reject) => {
-            db.get(`SELECT * FROM users WHERE id = ?`, [id], (err: Error, row: User) => {
+    async findById(id: number): Promise<UserEntity | undefined> {
+        return new Promise<UserEntity | undefined>((resolve, reject) => {
+            db.get(`SELECT * FROM users WHERE id = ?`, [id], (err: Error, row: UserEntity | undefined) => {
                 if (err) {
                     console.error(`findById: ${err}`);
                     reject(err);
@@ -28,9 +29,9 @@ class UserRepository {
         });
     }
 
-    async findByUsername(username: string): Promise<User> {
-        return new Promise<User>((resolve, reject) => {
-            db.get(`SELECT * FROM users WHERE username = ?`, [username], (err: Error, row: User) => {
+    async findByUsername(username: string): Promise<UserEntity | undefined> {
+        return new Promise<UserEntity | undefined>((resolve, reject) => {
+            db.get(`SELECT * FROM users WHERE username = ?`, [username], (err: Error, row: UserEntity | undefined) => {
                 if (err) {
                     console.error(`findByUsername: ${err}`);
                     reject(err);
@@ -41,9 +42,9 @@ class UserRepository {
         });
     }
 
-    async findByEmail(email: string): Promise<User> {
-        return new Promise<User>((resolve, reject) => {
-            db.get(`SELECT * FROM users WHERE email = ?`, [email], (err: Error, row: User) => {
+    async findByEmail(email: string): Promise<UserEntity | undefined> {
+        return new Promise<UserEntity | undefined>((resolve, reject) => {
+            db.get(`SELECT * FROM users WHERE email = ?`, [email], (err: Error, row: UserEntity | undefined) => {
                 if (err) {
                     console.error(`findByEmail: ${err}`);
                     reject(err);

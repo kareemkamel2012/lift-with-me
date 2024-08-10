@@ -1,14 +1,27 @@
 import { User } from "../models/user";
+import { UserEntity } from "../models/userEntity";
 import userRepository from "../repositories/userRepository";
 import bcrypt = require('bcrypt');
 
 class UserService {
-    async findById(id: number): Promise<User | null> {
+    toUser(userEntity: UserEntity | undefined): User | undefined {
+        if (!userEntity) {
+            return undefined;
+        }
+        return {
+            id: userEntity.id,
+            username: userEntity.username,
+            email: userEntity.email,
+            lastName: userEntity.lastName,
+            firstName: userEntity.firstName
+        }
+    }
+    async findById(id: number): Promise<User | undefined> {
         return await userRepository.findById(id);
     }
 
-    async findByUsername(username: string): Promise<User | null> {
-        return await userRepository.findByUsername(username);
+    async findByUsername(username: string): Promise<User | undefined> {
+        return this.toUser(await userRepository.findByUsername(username));
     }
     
     async create(
@@ -17,7 +30,7 @@ class UserService {
         password: string,
         lastName: string,
         firstName: string
-    ): Promise<User | null> {
+    ): Promise<User | undefined> {
         const passwordHash = await bcrypt.hash(password, 10);
         await userRepository.createUser(username, passwordHash, email, lastName, firstName);
         return this.findByUsername(username);

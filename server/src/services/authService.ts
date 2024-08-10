@@ -1,5 +1,6 @@
 import userRepository from '../repositories/userRepository';
 import { createToken } from '../utils/jwt';
+import userService from './userService';
 const bcrypt = require('bcrypt');
 
 class AuthService {
@@ -10,14 +11,14 @@ class AuthService {
         password: string
     ): Promise<string | null> {
         let user = undefined;
-        if (!username && email) {
-            user = await userRepository.findByEmail(email);
-        }
-        else if (!email && username) {
+        if (username) {
             user = await userRepository.findByUsername(username);
         }
+        else if (email) {
+            user = await userRepository.findByEmail(email);
+        }
         if (user && await bcrypt.compare(password, user.passwordHash)) {
-            return createToken(user);
+            return createToken(user.id);
         }
         else {
             return null;
@@ -34,12 +35,12 @@ class AuthService {
         if (await userRepository.findByUsername(username)) {
             throw new Error('Username already exists');
         }
-        await userRepository.createUser(username, password, email, lastName, firstName);
+        await userService.create(username, email, password, lastName, firstName);
         const newUser = await userRepository.findByUsername(username);
         if (!newUser) {
             throw new Error('Failed to create user');
         }
-        return createToken(newUser);
+        return createToken(newUser.id);
     }
 }
 

@@ -2,14 +2,13 @@ import jwt = require('jsonwebtoken');
 import { jwtSecret } from "../config";
 import { User } from "../models/user";
 import express = require('express');
+import userService from '../services/userService';
 
-export const createToken = (user: User) => {
-    // may need to make user into a "plain object" with stringify -> parse
-    return jwt.sign(user, jwtSecret);
+export const createToken = (userId: number) => {
+    return jwt.sign(userId.toString(), jwtSecret);
 }
 
-
-export const verifyToken = (req: express.Request, res: express.Response, next: express.NextFunction) => {
+export const verifyToken = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
     if (!req.headers['x-access-token']) {
         return res.status(403).send({ auth: false, message: 'No token provided.' });
     }
@@ -18,7 +17,7 @@ export const verifyToken = (req: express.Request, res: express.Response, next: e
     }
     const token = (req.headers['x-access-token'] as string).split(' ')[1];
     console.log(`token: `, token);
-    jwt.verify(token, jwtSecret, (err: any, decoded: any) => {
+    jwt.verify(token, jwtSecret, async (err: any, decoded: any) => {
         if (err) {
             switch (err.name) {
                 case 'TokenExpiredError':
@@ -33,8 +32,7 @@ export const verifyToken = (req: express.Request, res: express.Response, next: e
             }
             return;
         }
-        req.user = decoded;
-        console.log(`decoded: `, decoded);
+        req.user = await userService.findById(parseInt(decoded.id));
         next();
     });
 }
