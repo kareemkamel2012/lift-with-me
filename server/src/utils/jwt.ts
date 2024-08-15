@@ -32,7 +32,11 @@ export const verifyToken = async (req: express.Request, res: express.Response, n
             }
             return;
         }
-        req.user = await userService.findById(parseInt(decoded.id));
+        req.user = await userService.findById(parseInt(decoded));
+        if (!req.user) {
+            res.status(401).send({ auth: false, message: 'User not found' });
+            return;
+        }
         next();
     });
 }
