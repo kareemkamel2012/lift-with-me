@@ -25,7 +25,7 @@ class WorkoutService {
         note: string | undefined,
         workoutId: number
     ) {
-        await setRepository.insertSet(parseInt(exercise), reps, weight, note, workoutId);
+        await setRepository.insertSet(exercise, reps, weight, note, workoutId);
     }
 }
 

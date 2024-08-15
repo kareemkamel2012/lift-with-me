@@ -16,7 +16,7 @@ class SetRepository {
     }
 
     async insertSet(
-        exercise: number,
+        exercise: string,
         reps: number,
         weight: number,
         note: string | undefined,

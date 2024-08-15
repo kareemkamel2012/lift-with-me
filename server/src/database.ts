@@ -55,7 +55,7 @@ class Database {
 
             this.db.run(`CREATE TABLE IF NOT EXISTS sets (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                exercise INTEGER,
+                exercise TEXT,
                 reps INTEGER,
                 weight INTEGER,
                 note TEXT,
