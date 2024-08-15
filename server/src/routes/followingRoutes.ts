@@ -5,7 +5,7 @@ import userService from '../services/userService';
 const router = express.Router();
 
 router.post('/follow', verifyToken, async (req: express.Request, res: express.Response) => {
-    const followerId = req.body.followingId;
+    const followerId = parseInt(req.body.followingId);
     const followedId = parseInt(req.body.followedId);
     if (!followerId || !followedId) {
         res.status(400).json({error: 'Missing follower or followed id'});
@@ -20,7 +20,7 @@ router.post('/follow', verifyToken, async (req: express.Request, res: express.Re
 });
 
 router.post('/unfollow', verifyToken, async (req: express.Request, res: express.Response) => {
-    const followerId = req.body.followingId;
+    const followerId = parseInt(req.body.followingId);
     const followedId = parseInt(req.body.followedId);
     if (!followerId || !followedId) {
         res.status(400).json({error: 'Missing follower or followed id'});
@@ -35,7 +35,7 @@ router.post('/unfollow', verifyToken, async (req: express.Request, res: express.
 });
 
 router.get('/isFollowing', verifyToken, async (req: express.Request, res: express.Response) => {
-    const followerId = req.body.followingId;
+    const followerId = parseInt(req.body.followingId);
     const followedId = parseInt(req.body.followedId);
     if (!followerId || !followedId) {
         res.status(400).json({error: 'Missing follower or followed id'});
@@ -46,7 +46,7 @@ router.get('/isFollowing', verifyToken, async (req: express.Request, res: expres
 });
 
 router.get('/isFriend', verifyToken, async (req: express.Request, res: express.Response) => {
-    const user1Id = req.body.user1Id;
+    const user1Id = parseInt(req.body.user1Id);
     const user2Id = parseInt(req.body.user2Id);
     if (!user1Id || !user2Id) {
         res.status(400).json({error: 'Missing user1 or user2 id'});
