@@ -1,15 +1,15 @@
 import { db } from "../database";
-import { Set } from "../models/set";
+import { ExerciseSet } from "../models/set";
 
 class SetRepository {
-    async getSetsForWorkout(workoutId: number): Promise<Set[]> {
-        return new Promise<Set[]>((resolve, reject) => {
+    async getSetsForWorkout(workoutId: number): Promise<ExerciseSet[]> {
+        return new Promise<ExerciseSet[]>((resolve, reject) => {
             db.all(`SELECT * FROM sets WHERE workoutId = ?`, [workoutId], (err: Error, rows: any) => {
                 if (err) {
                     console.error(`getSetsForWorkout: ${err}`);
                     reject(err);
                 } else {
-                    resolve(rows.map((row: any) => row as Set));
+                    resolve(rows.map((row: any) => row as ExerciseSet));
                 }
             });
         });
@@ -31,3 +31,5 @@ class SetRepository {
         ]);
     }
 }
+
+export default new SetRepository();

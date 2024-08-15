@@ -1,4 +1,4 @@
-export type Set = {
+export type ExerciseSet = {
     exercise: number;
     id: number;
     reps: number;

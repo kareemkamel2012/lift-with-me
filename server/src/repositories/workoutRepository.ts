@@ -21,14 +21,23 @@ class WorkoutRepository {
         userId: number,
         date: string,
         rating: number
-    ): Promise<void> {
-        db.run(`INSERT INTO workouts (name, description, userId, date, rating) VALUES (?, ?, ?, ?, ?)`, [
-            name,
-            description,
-            userId,
-            date,
-            rating
-        ]);
+    ): Promise<number> {
+        return new Promise<number>((resolve, reject) => {
+            db.run(`INSERT INTO workouts (name, description, userId, date, rating) VALUES (?, ?, ?, ?, ?)`, [
+                name,
+                description,
+                userId,
+                date,
+                rating
+            ], function (err: Error | null, result: { lastID: number }) {
+                if (err) {
+                    console.error(`insertWorkout: ${err}`);
+                    reject(err);
+                } else {
+                    resolve(result.lastID);
+                }
+            });
+        });
     }
 
     async updateWorkout(workout: Workout): Promise<void> {
