@@ -1,5 +1,5 @@
 export type ExerciseSet = {
-    exercise: number;
+    exercise: string;
     id: number;
     reps: number;
     weight: number;
