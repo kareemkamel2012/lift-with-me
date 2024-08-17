@@ -4,7 +4,7 @@ import { verifyToken } from "../utils/jwt";
 
 const router = express.Router();
 
-router.post('/workouts', verifyToken, async (req: express.Request, res: express.Response) => {
+router.post('/workout', verifyToken, async (req: express.Request, res: express.Response) => {
     const userId = parseInt(req.body.userId);
     if (!userId) {
         res.status(400).json({error: 'Missing userId'});
@@ -26,4 +26,15 @@ router.post('/workouts', verifyToken, async (req: express.Request, res: express.
         });
     }
     await workoutService.createWorkout(userId, date, rating, name, description);
-})
+});
+
+router.get('/workouts', verifyToken, async (req: express.Request, res: express.Response) => {
+    const userId = parseInt(req.query.userId as string);
+    if (!userId) {
+        res.status(400).json({error: 'Missing userId'});
+    }
+    const workouts = await workoutService.getWorkoutsForUser(userId);
+    res.json({workouts});
+});
+
+export default router;

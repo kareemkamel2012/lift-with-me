@@ -1,4 +1,4 @@
-import { User } from "../models/user";
+import { User } from "../models/user/user";
 import followingRepository from "../repositories/followingRepository";
 import userService from "./userService";
 

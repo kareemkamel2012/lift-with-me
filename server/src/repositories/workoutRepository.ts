@@ -1,15 +1,15 @@
 import { db } from "../database";
-import { Workout } from "../models/workout";
+import { WorkoutEntity } from "../models/workout/workoutEntity";
 
 class WorkoutRepository {
-    async getWorkoutsForUser(userId: number): Promise<Workout[]> {
-        return new Promise<Workout[]>((resolve, reject) => {
+    async getWorkoutsForUser(userId: number): Promise<WorkoutEntity[]> {
+        return new Promise<WorkoutEntity[]>((resolve, reject) => {
             db.all(`SELECT * FROM workouts WHERE userId = ?`, [userId], (err: Error, rows: any) => {
                 if (err) {
                     console.error(`getWorkoutsForUser: ${err}`);
                     reject(err);
                 } else {
-                    resolve(rows.map((row: any) => row as Workout));
+                    resolve(rows.map((row: any) => row as WorkoutEntity));
                 }
             });
         });
@@ -40,7 +40,7 @@ class WorkoutRepository {
         });
     }
 
-    async updateWorkout(workout: Workout): Promise<void> {
+    async updateWorkout(workout: WorkoutEntity): Promise<void> {
         db.run(
             `UPDATE workouts SET name = ?, description = ?, date = ?, rating = ? WHERE id = ?`,
             [workout.name, workout.description, workout.date, workout.rating, workout.id]

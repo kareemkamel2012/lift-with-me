@@ -1,4 +1,6 @@
 import { ExerciseSet } from "../models/set";
+import { WorkoutEntity } from "../models/workout/workoutEntity";
+import { WorkoutModel } from "../models/workout/workoutModel";
 import setRepository from "../repositories/setRepository";
 import workoutRepository from "../repositories/workoutRepository";
 import { WithoutId } from "../utils/withoutId";
@@ -18,14 +20,24 @@ class WorkoutService {
         }
     }
 
-    async createSet(
-        exercise: string,
-        reps: number,
-        weight: number,
-        note: string | undefined,
-        workoutId: number
-    ) {
-        await setRepository.insertSet(exercise, reps, weight, note, workoutId);
+    async getWorkoutsForUser(userId: number): Promise<WorkoutModel[]> {
+        const workoutEntities = await workoutRepository.getWorkoutsForUser(userId);
+        return Promise.all(workoutEntities.map(async workoutEntity => {
+            const sets = await setRepository.getSetsForWorkout(workoutEntity.id);
+            return this.createWorkoutModel(workoutEntity, sets);
+        }));
+    }
+
+    private createWorkoutModel(workoutEntity: WorkoutEntity, sets: ExerciseSet[]): WorkoutModel {
+        return {
+            id: workoutEntity.id,
+            name: workoutEntity.name,
+            description: workoutEntity.description,
+            userId: workoutEntity.userId,
+            date: new Date(workoutEntity.date),
+            rating: workoutEntity.rating,
+            sets: sets,
+        }
     }
 }
 

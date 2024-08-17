@@ -1,6 +1,6 @@
 import jwt = require('jsonwebtoken');
 import { jwtSecret } from "../config";
-import { User } from "../models/user";
+import { User } from "../models/user/user";
 import express = require('express');
 import userService from '../services/userService';
 
