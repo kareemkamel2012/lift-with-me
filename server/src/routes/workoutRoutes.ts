@@ -4,6 +4,34 @@ import { verifyToken } from "../utils/jwt";
 
 const router = express.Router();
 
+/*
+    Create a new workout
+
+    Doesn't work as of 08/17/2024, DON'T USE
+
+    Request must include x-access-token header with JWT
+    JWT should belong to user creating the workout
+
+    POST /workouts/workout
+
+    Request:
+        {
+            userId: number,
+            [optional] name: string,
+            [optional] description: string,
+            date: string,
+            rating: number,
+            sets: {
+                exercise: string,
+                weight: number,
+                reps: number,
+                [optional] note: string
+            }[]
+        }
+
+    Response:
+        none
+*/
 router.post('/workout', verifyToken, async (req: express.Request, res: express.Response) => {
     const userId = parseInt(req.body.userId);
     if (!userId) {
@@ -28,6 +56,28 @@ router.post('/workout', verifyToken, async (req: express.Request, res: express.R
     await workoutService.createWorkout(userId, date, rating, name, description);
 });
 
+/*
+    Get list of user's workouts
+
+    Request must include x-access-token header with JWT
+
+    GET /workouts/workouts?userId=number
+
+    Response:
+        {
+            userId: number,
+            [optional] name: string,
+            [optional] description: string,
+            date: string,
+            rating: number,
+            sets: {
+                exercise: string,
+                weight: number,
+                reps: number,
+                [optional] note: string
+            }[]
+        }[]
+*/
 router.get('/workouts', verifyToken, async (req: express.Request, res: express.Response) => {
     const userId = parseInt(req.query.userId as string);
     if (!userId) {
