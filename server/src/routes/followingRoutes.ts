@@ -12,6 +12,7 @@ router.post('/follow', verifyToken, async (req: express.Request, res: express.Re
     } else {
         try {
             await followingService.follow(followerId, followedId);
+            res.sendStatus(200);
         } catch (err) {
             console.log(err);
             res.sendStatus(500);
@@ -27,6 +28,7 @@ router.post('/unfollow', verifyToken, async (req: express.Request, res: express.
     } else {
         try {
             await followingService.unfollow(followerId, followedId);
+            res.sendStatus(200);
         } catch (err) {
             console.log(err);
             res.sendStatus(500);
@@ -35,8 +37,8 @@ router.post('/unfollow', verifyToken, async (req: express.Request, res: express.
 });
 
 router.get('/isFollowing', verifyToken, async (req: express.Request, res: express.Response) => {
-    const followerId = parseInt(req.body.followingId);
-    const followedId = parseInt(req.body.followedId);
+    const followerId = parseInt(req.query.followingId as string);
+    const followedId = parseInt(req.query.followedId as string);
     if (!followerId || !followedId) {
         res.status(400).json({error: 'Missing follower or followed id'});
     } else {
@@ -46,8 +48,8 @@ router.get('/isFollowing', verifyToken, async (req: express.Request, res: expres
 });
 
 router.get('/isFriend', verifyToken, async (req: express.Request, res: express.Response) => {
-    const user1Id = parseInt(req.body.user1Id);
-    const user2Id = parseInt(req.body.user2Id);
+    const user1Id = parseInt(req.query.user1Id as string);
+    const user2Id = parseInt(req.query.user2Id as string);
     if (!user1Id || !user2Id) {
         res.status(400).json({error: 'Missing user1 or user2 id'});
     } else {
@@ -57,7 +59,8 @@ router.get('/isFriend', verifyToken, async (req: express.Request, res: express.R
 });
 
 router.get('/followers', verifyToken, async (req: express.Request, res: express.Response) => {
-    const userId = parseInt(req.body.userId);
+    const userId = parseInt(req.query.userId as string);
+    console.log(userId);
     if (!userId) {
         res.status(400).json({error: 'Missing followed id'});
     } else {
@@ -67,7 +70,7 @@ router.get('/followers', verifyToken, async (req: express.Request, res: express.
 })
 
 router.get('/following', verifyToken, async (req: express.Request, res: express.Response) => {
-    const userId = parseInt(req.body.userId);
+    const userId = parseInt(req.query.userId as string);
     if (!userId) {
         res.status(400).json({error: 'Missing followed id'});
     } else {
@@ -77,7 +80,7 @@ router.get('/following', verifyToken, async (req: express.Request, res: express.
 })
 
 router.get('/friends', verifyToken, async (req: express.Request, res: express.Response) => {
-    const userId = parseInt(req.body.userId);
+    const userId = parseInt(req.query.userId as string);
     if (!userId) {
         res.status(400).json({error: 'Missing followed id'});
     } else {
@@ -86,14 +89,5 @@ router.get('/friends', verifyToken, async (req: express.Request, res: express.Re
     }
 })
 
-router.get('/user', verifyToken, (req: express.Request, res: express.Response) => {
-    const user = req.user;
-    res.status(200).json({user});
-})
-
-router.get('/usernameExists', async (req: express.Request, res: express.Response) => {
-    const username: string = (typeof req.query.username === 'string') ? req.query.username : '';
-    res.json({exists: !!await userService.findByUsername(username)});
-})
-
 export default router;
+

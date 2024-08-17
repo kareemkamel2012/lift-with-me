@@ -4,7 +4,9 @@ import userService from "./userService";
 
 class FollowingService {
     async follow(followerId: number, followedId: number): Promise<void> {
-        await followingRepository.makeFollow(followerId, followedId);
+        if (!await followingRepository.isFollowing(followerId, followedId)) {
+            await followingRepository.makeFollow(followerId, followedId);
+        }
     }
 
     async unfollow(followerId: number, followedId: number): Promise<void> {
