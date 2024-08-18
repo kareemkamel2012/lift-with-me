@@ -29,12 +29,12 @@ class WorkoutRepository {
                 userId,
                 date,
                 rating
-            ], function (err: Error | null, result: { lastID: number }) {
+            ], function (err: Error | null) {
                 if (err) {
                     console.error(`insertWorkout: ${err}`);
                     reject(err);
                 } else {
-                    resolve(result.lastID);
+                    resolve(this.lastID);
                 }
             });
         });

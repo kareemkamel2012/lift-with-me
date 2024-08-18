@@ -1,13 +1,13 @@
 import express from "express";
 import workoutService from "../services/workoutService";
 import { verifyToken } from "../utils/jwt";
+import { WithoutId } from "../utils/withoutId";
+import { ExerciseSet } from "../models/set";
 
 const router = express.Router();
 
 /*
     Create a new workout
-
-    Doesn't work as of 08/17/2024, DON'T USE
 
     Request must include x-access-token header with JWT
     JWT should belong to user creating the workout
@@ -53,7 +53,8 @@ router.post('/workout', verifyToken, async (req: express.Request, res: express.R
             note: set.note
         });
     }
-    await workoutService.createWorkout(userId, date, rating, name, description);
+    await workoutService.createWorkout(userId, date, rating, name, description, sets as WithoutId<ExerciseSet>[]);
+    res.sendStatus(200);
 });
 
 /*

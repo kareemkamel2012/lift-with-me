@@ -14,6 +14,9 @@ class WorkoutService {
         description?: string,
         sets: WithoutId<ExerciseSet>[] = []
     ) {
+        for (const set of sets) {
+            console.log(set.exercise, set.reps, set.weight, set.note);
+        }
         const workoutId = await workoutRepository.insertWorkout(name, description, userId, date, rating);
         for (const set of sets) {
             setRepository.insertSet(set.exercise, set.reps, set.weight, set.note, workoutId);
