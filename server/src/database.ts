@@ -87,7 +87,6 @@ class Database {
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 userId INTEGER NOT NULL,
                 postId INTEGER NOT NULL,
-                date TEXT NOT NULL,
                 FOREIGN KEY (userId) REFERENCES users(id),
                 FOREIGN KEY (postId) REFERENCES posts(id)
             )`);
