@@ -43,6 +43,8 @@ class Database {
                 FOREIGN KEY (person2Id) REFERENCES users(id)
             )`);
 
+            // rating should be from 1 to 5
+            // could be represented on client as "stars" or something else, easy to change
             this.db.run(`CREATE TABLE IF NOT EXISTS workouts (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name TEXT,
