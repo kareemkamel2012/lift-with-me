@@ -4,6 +4,8 @@ import React, { useEffect } from 'react';
 import { getUser } from './utils/authUtils';
 import { User } from './types/user';
 import { UserContext } from './context/userContext';
+import LogIn from './pages/LogIn';
+import SignUp from './pages/SignUp';
 
 const App = () => {
     const [user, setUser] = React.useState<User | null>(null);
@@ -17,6 +19,9 @@ const App = () => {
             <BrowserRouter>
                 <Routes>
                     <Route path='/' element={<HomePage />} />
+                    <Route path='/login' element={<LogIn />} />
+                    <Route path='/signup' element={<SignUp />} />
+                    <Route path='*' element={<HomePage />} />
                 </Routes>
             </BrowserRouter>
         </UserContext.Provider>

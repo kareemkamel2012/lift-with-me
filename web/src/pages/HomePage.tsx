@@ -22,10 +22,10 @@ const LoggedInHomePage = () => {
 
 const LoggedOutHomePage = () => {
     return (
-        <>
+        <div className="bg-gray-300 h-screen flex flex-col items-center">
             <NavBar />
             <Feed />
-        </>
+        </div>
     )
 }
 
