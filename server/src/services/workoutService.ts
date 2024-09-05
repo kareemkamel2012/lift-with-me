@@ -1,6 +1,6 @@
-import { ExerciseSet } from "../models/set";
-import { WorkoutEntity } from "../models/workout/workoutEntity";
-import { WorkoutModel } from "../models/workout/workoutModel";
+import { ExerciseSet } from "../entities/set";
+import { WorkoutEntity } from "../entities/workout/workoutEntity";
+import { WorkoutModel } from "../entities/workout/workoutModel";
 import setRepository from "../repositories/setRepository";
 import workoutRepository from "../repositories/workoutRepository";
 import { WithoutId } from "../utils/withoutId";

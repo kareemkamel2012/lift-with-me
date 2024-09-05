@@ -1,5 +1,5 @@
-import { User } from "../models/user/user";
-import { UserEntity } from "../models/user/userEntity";
+import { User } from "../entities/user/user";
+import { UserEntity } from "../entities/user/userEntity";
 import userRepository from "../repositories/userRepository";
 import bcrypt = require('bcrypt');
 

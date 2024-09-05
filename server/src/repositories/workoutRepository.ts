@@ -1,5 +1,5 @@
 import { db } from "../database";
-import { WorkoutEntity } from "../models/workout/workoutEntity";
+import { WorkoutEntity } from "../entities/workout/workoutEntity";
 
 class WorkoutRepository {
     async getWorkoutsForUser(userId: number): Promise<WorkoutEntity[]> {

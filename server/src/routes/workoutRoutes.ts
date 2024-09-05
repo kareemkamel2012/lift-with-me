@@ -2,7 +2,7 @@ import express from "express";
 import workoutService from "../services/workoutService";
 import { verifyToken } from "../utils/jwt";
 import { WithoutId } from "../utils/withoutId";
-import { ExerciseSet } from "../models/set";
+import { ExerciseSet } from "../entities/set";
 
 const router = express.Router();
 

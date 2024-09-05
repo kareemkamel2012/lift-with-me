@@ -1,4 +1,4 @@
-import { User } from "../models/user/user";
+import { User } from "../entities/user/user";
 
 export {};
 
