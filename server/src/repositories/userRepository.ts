@@ -1,6 +1,6 @@
 import { db } from '../database';
-import { User } from '../entities/user/user';
-import { UserEntity } from '../entities/user/userEntity';
+import { User } from '../models/user/user';
+import { UserEntity } from '../models/user/userEntity';
 
 class UserRepository {
     async createUser(

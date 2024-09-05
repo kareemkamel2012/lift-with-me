@@ -1,5 +1,5 @@
 import { db } from "../database";
-import { ExerciseSet } from "../entities/set";
+import { ExerciseSet } from "../models/set";
 
 class SetRepository {
     async getSetsForWorkout(workoutId: number): Promise<ExerciseSet[]> {

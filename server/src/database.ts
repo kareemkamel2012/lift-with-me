@@ -69,10 +69,8 @@ class Database {
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 content TEXT,
                 userId INTEGER NOT NULL,
-                workoutId INTEGER,
                 date TEXT NOT NULL,
-                FOREIGN KEY (userId) REFERENCES users(id),
-                FOREIGN KEY (workoutId) REFERENCES workouts(id)
+                FOREIGN KEY (userId) REFERENCES users(id)
             )`);
 
             this.db.run(`CREATE TABLE IF NOT EXISTS comments (
